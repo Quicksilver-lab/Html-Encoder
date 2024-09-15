@@ -1,26 +1,179 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <title>HTML Encoder</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick HTML Encoder</title>
+    <style>
+      body {
+        font-family: 'Courier New', monospace;
+        background-color: #0e0e0e;
+        color: #00ffcc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #00ffcc;
+        text-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffff, 0 0 45px #00ffcc;
+      }
+
+      p {
+        font-size: 1.2rem;
+        color: #00ffcc;
+      }
+
+      textarea {
+        width: 80%;
+        height: 200px;
+        background-color: #1b1b1b;
+        border: 2px solid #00ffcc;
+        color: #00ffcc;
+        font-size: 1.1rem;
+        padding: 15px;
+        border-radius: 10px;
+        outline: none;
+        box-shadow: 0 0 15px #00ffcc;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        margin: 20px 10px;
+        border: none;
+        background-color: #00ffcc;
+        color: #0e0e0e;
+        cursor: pointer;
+        border-radius: 8px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+        transition: 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #00ff99;
+        box-shadow: 0 0 25px #00ff99, 0 0 50px #00ff99;
+      }
+
+      .output-container {
+        margin-top: 30px;
+        font-size: 1.5rem;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 10px;
+        color: #00ffcc;
+        font-weight: bold;
+        font-size: 1.3rem;
+        text-decoration: none;
+        text-shadow: 0 0 10px #00ffcc;
+        transition: 0.3s ease;
+      }
+
+      a:hover {
+        color: #00ff99;
+        text-shadow: 0 0 20px #00ff99;
+      }
+
+      textarea:focus {
+        box-shadow: 0 0 20px #00ffcc;
+      }
+
+      /* Credits */
+      .credits {
+        position: absolute;
+        bottom: 10px;
+        font-size: 1rem;
+        color: #00ffcc;
+        text-shadow: 0 0 10px #00ffcc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .credits span {
+        color: #00ffcc;
+        font-weight: bold;
+        text-shadow: 0 0 10px #00ff99;
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff99;
+        }
+        to {
+          text-shadow: 0 0 20px #00ff99, 0 0 30px #00ff99;
+        }
+      }
+
+      @media (max-width: 768px) {
+        textarea {
+          width: 90%;
+        }
+
+        button {
+          width: 80%;
+          margin: 10px 0;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Retejo HTML Encoder</h1>
-    <p>Enter some HTML code to be encoded as a Retejo URL:</p>
-    <input type="text" id="input">
-    <button onclick="encodeInput()">Encode</button>
-    <br>
-    <p>Retejo URL:</p>
-    <a target="_blank" id="output"></a>
-  </body>
-  <script>
-    function encodeInput() {
-      const input = document.getElementById("input")
-      const encoded = encodeURIComponent(btoa(input.value))
-      const output = document.getElementById("output")
+    <h1>Quick HTML Encoder</h1>
+    <p>Enter some HTML code to be encoded as a URL:</p>
+    <textarea id="input" placeholder="Enter your HTML code here..."></textarea>
+    <div>
+      <button onclick="encodeInput()">Encode</button>
+      <button onclick="copyToClipboard()">Copy URL</button>
+    </div>
+    <div class="output-container">
+      <p>Retejo URL:</p>
+      <a target="_blank" id="output">Your encoded URL will appear here</a>
+    </div>
 
-      output.href = "https://retejo.cedoor.dev/?" + encoded
-      output.innerHTML = "Click me!"
-    }
-  </script>
+    <!-- Credits Section -->
+    <p>Crafted with 💻 & ⚡ by 
+    <a href="https://github.com/Quicksilver-lab" target="_blank">
+    <span>QuickSilver</span>
+    </a>
+    </p>
+
+
+    <script>
+      function encodeInput() {
+        const input = document.getElementById("input").value.trim();
+        const output = document.getElementById("output");
+
+        if (!input) {
+          alert("Please enter some HTML code to encode.");
+          return;
+        }
+
+        try {
+          const encoded = encodeURIComponent(btoa(input));
+          output.href = "https://retejo.cedoor.dev/?" + encoded;
+          output.innerHTML = "Click me to open your encoded URL!";
+        } catch (error) {
+          alert("Error encoding the HTML. Please try again.");
+        }
+      }
+
+      function copyToClipboard() {
+        const output = document.getElementById("output").href;
+        navigator.clipboard.writeText(output).then(() => {
+          alert("URL copied to clipboard!");
+        }).catch(err => {
+          alert("Failed to copy the URL. Please try again.");
+        });
+      }
+    </script>
+  </body>
 </html>
