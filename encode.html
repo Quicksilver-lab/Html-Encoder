@@ -1,94 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML Encoder</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        text-align: center;
-        padding: 50px;
-      }
-      h1 {
-        color: #4CAF50;
-      }
-      input, button {
-        padding: 10px;
-        font-size: 16px;
-        margin: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 80%;
-      }
-      input {
-        width: 80%;
-        height: 50px;
-      }
-      button {
-        background-color: #4CAF50;
-        color: white;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-      .output-container {
-        margin-top: 20px;
-        font-size: 18px;
-      }
-      a {
-        display: block;
-        margin-top: 10px;
-        color: #4CAF50;
-        font-weight: bold;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
   </head>
   <body>
     <h1>Retejo HTML Encoder</h1>
     <p>Enter some HTML code to be encoded as a Retejo URL:</p>
-    <textarea id="input" placeholder="Enter HTML code here..." rows="6"></textarea>
-    <br>
+    <input type="text" id="input">
     <button onclick="encodeInput()">Encode</button>
-    <button onclick="copyToClipboard()">Copy URL</button>
-    <div class="output-container">
-      <p>Retejo URL:</p>
-      <a target="_blank" id="output">Your encoded URL will appear here</a>
-    </div>
+    <br>
+    <p>Retejo URL:</p>
+    <a target="_blank" id="output"></a>
   </body>
   <script>
     function encodeInput() {
-      const input = document.getElementById("input").value.trim();
-      const output = document.getElementById("output");
+      const input = document.getElementById("input")
+      const encoded = encodeURIComponent(btoa(input.value))
+      const output = document.getElementById("output")
 
-      if (!input) {
-        alert("Please enter some HTML code to encode.");
-        return;
-      }
-
-      try {
-        const encoded = encodeURIComponent(btoa(input));
-        output.href = "https://quicksilver-lab.github.io/Html-Encoder/?" + encoded;
-        output.innerHTML = "Click me to open your encoded URL!";
-      } catch (error) {
-        alert("Error encoding the HTML. Please try again.");
-      }
-    }
-
-    function copyToClipboard() {
-      const output = document.getElementById("output").href;
-      navigator.clipboard.writeText(output).then(() => {
-        alert("URL copied to clipboard!");
-      }).catch(err => {
-        alert("Failed to copy the URL. Please try again.");
-      });
+      output.href = "https://retejo.cedoor.dev/?" + encoded
+      output.innerHTML = "Click me!"
     }
   </script>
 </html>
